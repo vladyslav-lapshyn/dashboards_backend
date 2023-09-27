@@ -21,7 +21,7 @@ class TaskService {
     const column = await Columns.findByPk(columnId);
 
     if (!column) {
-      throw new Error('Dashboard not found');
+      throw new Error('Column not found');
     }
 
     const task = await Task.create({ title, columnId });

@@ -27,7 +27,8 @@ module.exports = {
         },
         description: {
           allowNull: true,
-          type: Sequelize.STRING
+          type: Sequelize.STRING,
+          defaultValue: null,
         },
         createdAt: {
           type: Sequelize.DATE,

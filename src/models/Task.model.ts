@@ -41,7 +41,7 @@ export class Task extends Model {
   @Column({
     type: DataType.STRING,
   })
-    description?: string;
+    description?: string | null;
 
   @BelongsTo(() => Columns, {
     onDelete: 'CASCADE',
