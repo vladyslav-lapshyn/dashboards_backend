@@ -29,6 +29,20 @@ export class Dashboard extends Model {
   })
     title!: string;
 
+  @AllowNull(false)
+  @Column({
+    type: DataType.BOOLEAN,
+    defaultValue: false,
+  })
+    important!: boolean;
+
+  @AllowNull(false)
+  @Column({
+    type: DataType.BOOLEAN,
+    defaultValue: true,
+  })
+    isOpened!: boolean;
+
   @HasMany(() => Columns, {
     onDelete: 'CASCADE',
   })

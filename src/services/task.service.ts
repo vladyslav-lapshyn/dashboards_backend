@@ -17,14 +17,19 @@ class TaskService {
     return TaskService.instance;
   }
 
-  async createTask(columnId: number, title: string) {
+  async createTask(
+    columnId: number,
+    title: string,
+  ) {
     const column = await Columns.findByPk(columnId);
 
     if (!column) {
       throw new Error('Column not found');
     }
 
-    const task = await Task.create({ title, columnId });
+    const description = 'qwewqe';
+
+    const task = await Task.create({ title, columnId, description });
 
     return task;
   }

@@ -1,6 +1,7 @@
 'use strict';
 
 import { Dashboard } from '../models/Dashboard.model.js';
+import { UpdatedFields } from '../types.js';
 
 class DashboardService {
   private static instance: DashboardService | null = null;
@@ -17,38 +18,38 @@ class DashboardService {
   }
 
   async createDashboard(title: string) {
-    const dashboard = await Dashboard.create({ title });
-
-    return dashboard;
+    return await Dashboard.create({ title });
   }
 
-  async getAllDashboards() {
-    const dashboards = await Dashboard.findAll();
+  async getDashboards(isOpened: boolean) {
+    const where = {
+      isOpened,
+    };
 
-    return dashboards;
+    return await Dashboard.findAll({
+      where,
+      order: [
+        ['important', 'DESC'],
+        ['createdAt', 'ASC'],
+      ],
+    });
   }
 
   async getDashboard(id: number) {
-    const dashboard = await Dashboard.findByPk(id);
-
-    return dashboard;
+    return await Dashboard.findByPk(id);
   }
 
-  async updateDashboard(id: number, title: string) {
-    const dashboard = await Dashboard.update(
-      { title },
+  async updateDashboard(id: number, updatedFields: UpdatedFields) {
+    return await Dashboard.update(
+      updatedFields,
       { where: { id } },
     );
-
-    return dashboard;
   }
 
   async deleteDashboard(id: number) {
-    const dashboard = await Dashboard.destroy({
+    return await Dashboard.destroy({
       where: { id },
     });
-
-    return dashboard;
   }
 }
 
