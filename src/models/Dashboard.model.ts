@@ -34,7 +34,7 @@ export class Dashboard extends Model {
     type: DataType.BOOLEAN,
     defaultValue: false,
   })
-    important!: boolean;
+    isImportant!: boolean;
 
   @AllowNull(false)
   @Column({

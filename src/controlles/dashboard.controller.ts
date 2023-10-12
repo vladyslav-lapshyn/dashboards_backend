@@ -66,7 +66,7 @@ class DashboardController {
   };
 
   updateDashboard: Controller = async (req, res) => {
-    const { title, isOpened, important } = req.body;
+    const { title, isOpened, isImportant } = req.body;
     const { id } = req.params;
 
     if (!id) {
@@ -75,15 +75,15 @@ class DashboardController {
       return;
     }
 
-    if (!title && !isOpened && !important) {
+    if (!title && isOpened === undefined && isImportant === undefined) {
       res.status(400).json({
-        message: 'At least one field (title, isOpened, important) must be provided for updating',
+        message: 'At least one field (title, isOpened, isImportant) must be provided for updating',
       });
 
       return;
     }
 
-    if (isOpened && isOpened !== 'true' && isOpened !== 'false') {
+    if (isOpened !== undefined && typeof isOpened !== 'boolean') {
       res.status(400).json({
         message: 'Field isOpened can has only one of two value true or false',
       });
@@ -91,10 +91,12 @@ class DashboardController {
       return;
     }
 
-    if (important && important !== 'true' && important !== 'false') {
+    if (isImportant !== undefined && typeof isImportant !== 'boolean') {
       res.status(400).json({
-        message: 'Field important can has only one of two value true or false',
+        message: 'Field isImportant can has only one of two value true or false',
       });
+
+      return;
     }
 
     const updatedFields: UpdatedFields = {};
@@ -103,12 +105,12 @@ class DashboardController {
       updatedFields.title = title;
     }
 
-    if (isOpened) {
-      updatedFields.isOpened = isOpened === 'true';
+    if (typeof isOpened === 'boolean') {
+      updatedFields.isOpened = isOpened;
     }
 
-    if (important) {
-      updatedFields.important = important === 'true';
+    if (typeof isImportant === 'boolean') {
+      updatedFields.isImportant = isImportant;
     }
 
     const normalizeId = Number(id);

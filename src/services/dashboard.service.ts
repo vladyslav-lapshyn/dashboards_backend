@@ -29,7 +29,7 @@ class DashboardService {
     return await Dashboard.findAll({
       where,
       order: [
-        ['important', 'DESC'],
+        ['isImportant', 'DESC'],
         ['createdAt', 'ASC'],
       ],
     });
